@@ -13,12 +13,7 @@ use Illuminate\Support\Arr;
 class Post extends Model
 {
     use HasFactory;
-    protected $fillable = [
-        'title',
-        'slug',
-        'author',
-        'body'
-    ];
+    protected $guarded = ['id'];
 
     protected $with = ['author', 'category'];
 
@@ -27,7 +22,8 @@ class Post extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function category() {
+    public function category()
+    {
         return $this->belongsTo(Category::class);
     }
 
@@ -39,13 +35,17 @@ class Post extends Model
         });
 
         $query->when($filters['category'] ?? false, function ($query, $category) {
-            $query->whereHas('category', fn (Builder $query) => 
+            $query->whereHas(
+                'category',
+                fn(Builder $query) =>
                 $query->where('slug', $category)
             );
         });
 
         $query->when($filters['author'] ?? false, function ($query, $author) {
-            $query->whereHas('author', fn (Builder $query) => 
+            $query->whereHas(
+                'author',
+                fn(Builder $query) =>
                 $query->where('username', $author)
             );
         });

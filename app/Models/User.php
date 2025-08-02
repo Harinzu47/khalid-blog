@@ -23,6 +23,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'email',
         'password',
         'username',
+        'avatar',
     ];
 
     /**
@@ -48,7 +49,7 @@ class User extends Authenticatable implements MustVerifyEmail
         ];
     }
 
-        public function posts(): HasMany
+    public function posts(): HasMany
     {
         return $this->hasMany(Post::class, 'author_id');
     }
