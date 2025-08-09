@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class PostDashboardController extends Controller
@@ -40,17 +41,20 @@ class PostDashboardController extends Controller
                 'title' => 'required|unique:posts|min:4|max:255',
                 'category_id' => 'required',
                 'body' => 'required|min:50',
+                'image' => 'image|file|max:2048',
             ],
             [
                 'title.required' => 'Field :attribute harus diisi!',
                 'category_id.required' => 'Pilih salah satu kategori!',
                 'body.min' => ':attribute minimal 50 karakter',
+                'image.image' => 'File harus berupa gambar',
 
             ],
             [
                 'title' => 'Judul',
                 'category_id' => 'Kategori',
                 'body' => 'Isi Konten',
+                'image' => 'Gambar',
             ]
         )->validate();
 
@@ -58,6 +62,7 @@ class PostDashboardController extends Controller
             'title' => $request->title,
             'slug' => str()->slug($request->title),
             'body' => $request->body,
+            'image' => $request->file('image') ? $request->file('image')->store('img', 'public') : null,
             'category_id' => $request->category_id,
             'author_id' => Auth::user()->id,
         ]);
@@ -95,12 +100,14 @@ class PostDashboardController extends Controller
             'title' => 'required|min:4|max:255|unique:posts,title,' . $post->id,
             'category_id' => 'required',
             'body' => 'required',
+            'image' => 'image|file|max:2048',
         ]);
 
         $post->update([
             'title' => $request->title,
             'slug' => str()->slug($request->title),
             'body' => $request->body,
+            'image' => $request->file('image') ? $request->file('image')->store('img', 'public') : $post->image,
             'category_id' => $request->category_id,
             'author_id' => Auth::user()->id,
         ]);
@@ -116,6 +123,10 @@ class PostDashboardController extends Controller
         //buat toast dihalaman blade nya
         if ($post->author_id !== Auth::user()->id) {
             return redirect('/dashboard')->with(['error' => 'You are not authorized to delete this post!']);
+        }
+
+        if ($post->image) {
+            Storage::delete($post->image);
         }
 
         $post->delete();

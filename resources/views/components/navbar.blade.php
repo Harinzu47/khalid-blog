@@ -1,11 +1,9 @@
-<nav class="bg-gray-800" x-data="{ isOpen: false }">
+<nav class="bg-white shadow-md" x-data="{ isOpen: false }">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div class="flex h-16 items-center justify-between">
             <div class="flex items-center">
                 <div class="shrink-0">
-                    <img class="size-8"
-                        src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=500"
-                        alt="Your Company">
+                    <img class="size-10" src="{{ asset('img/logo-imm-ft-umj.png') }}" alt="Logo" aria-label="Logo">
                 </div>
                 <div class="hidden md:block">
                     <div class="ml-10 flex items-baseline space-x-4">
@@ -42,22 +40,11 @@
                                     </div>
                                 </button>
                             @else
-                                <a href="/login" class="text-white text-sm font-medium">Login</a>
-                                <span class="text-white text-sm">|</span>
-                                <a href="/register" class="text-white text-sm font-medium">Register</a>
+                                <a href="/login" class="text-dark text-sm font-medium">Login</a>
+                                <span class="text-dark text-sm">|</span>
+                                <a href="/register" class="text-dark text-sm font-medium">Register</a>
                             @endif
                         </div>
-
-                        <!--
-                Dropdown menu, show/hide based on menu state.
-
-                Entering: "transition ease-out duration-100"
-                  From: "transform opacity-0 scale-95"
-                  To: "transform opacity-100 scale-100"
-                Leaving: "transition ease-in duration-75"
-                  From: "transform opacity-100 scale-100"
-                  To: "transform opacity-0 scale-95"
-              -->
                         <div x-show="isOpen" x-transition:enter="transition ease-out duration-100 transform"
                             x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100"
                             x-transition:leave="transition ease-in duration-75 transform"

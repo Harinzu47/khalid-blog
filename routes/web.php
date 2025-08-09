@@ -1,23 +1,23 @@
 <?php
 
-use App\Http\Controllers\PostDashboardController;
 use App\Models\Post;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PostController;
+use App\Http\Middleware\AdminMiddleware;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\PostDashboardController;
+use App\Http\Controllers\Admin\AdminPostController;
+use App\Http\Controllers\Admin\AdminUserController;
+use App\Http\Controllers\Admin\AdminCategoryController;
 
 Route::get('/', function () {
     return view('home', ['title' => 'Home Page']);
 });
 
-Route::get('/posts', function () {
-    // $posts = Post::with(['author', 'category'])->latest()->get();
-    $posts = Post::latest()->filter(request(['search', 'category', 'author']))->paginate(6)->withQueryString();
-    return view('posts', ['title' => 'Blog', 'posts' => $posts]);
-});
+Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
 
-Route::get('/posts/{post:slug}', function (Post $post) {
-    return view('post', ['title' => 'Single Post', 'post' => $post]);
-});
+Route::get('/posts/{post:slug}', [PostController::class, 'show'])->name('posts.show');
 
 Route::get('/about', function () {
     return view('about', ['title' => 'About Us']);
@@ -49,6 +49,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('/dashboard/{post:slug}', [PostDashboardController::class, 'show'])
         ->name('dashboard.post.show');
+});
+
+Route::middleware([AdminMiddleware::class])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/', [AdminController::class, 'index'])->name('dashboard');
+    Route::resource('users', AdminUserController::class);
+    Route::resource('posts', AdminPostController::class);
+    Route::resource('categories', AdminCategoryController::class)->except('show');
 });
 
 Route::middleware('auth')->group(function () {
