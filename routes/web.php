@@ -4,6 +4,7 @@ use App\Models\Post;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Middleware\AdminMiddleware;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\PostDashboardController;
@@ -13,11 +14,13 @@ use App\Http\Controllers\Admin\AdminCategoryController;
 
 Route::get('/', function () {
     return view('home', ['title' => 'Home Page']);
-});
+})->name('home');
 
 Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
 
 Route::get('/posts/{post:slug}', [PostController::class, 'show'])->name('posts.show');
+
+Route::post('/posts/{post}/comments', [CommentController::class, 'store'])->name('comments.store');
 
 Route::get('/about', function () {
     return view('about', ['title' => 'About Us']);

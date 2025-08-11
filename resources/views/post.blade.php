@@ -1,25 +1,18 @@
 <x-layout :title="$title">
     <div class="max-w-7xl mx-auto my-10 px-4 sm:px-6 lg:px-8 py-8 bg-white rounded-lg shadow-md">
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-
-            <!-- Main Content -->
             <div class="lg:col-span-2">
-                <!-- Featured Image -->
                 @if ($post->image)
                     <div class="mb-8">
                         <img src="{{ asset('storage/' . $post->image) }}" alt="{{ $post->title }}"
                             class="w-full h-64 md:h-80 object-cover rounded-lg shadow-lg">
                     </div>
                 @endif
-
-                <!-- Article Header -->
                 <header class="mb-8">
                     <h1
                         class="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-6 leading-tight">
                         {{ $post->title }}
                     </h1>
-
-                    <!-- Author Info -->
                     <div class="flex items-center mb-6">
                         <img class="w-12 h-12 rounded-full mr-4"
                             src="{{ $post->author->avatar ? asset('storage/' . $post->author->avatar) : asset('img/default-avatar.png') }}"
@@ -43,14 +36,9 @@
                         </div>
                     </div>
                 </header>
-
-                <!-- Article Content -->
                 <div class="prose prose-lg dark:prose-invert max-w-none border-b border-gray-200 dark:border-gray-700">
                     {!! $post->body !!}
                 </div>
-
-
-                <!-- Author Bio -->
                 <div class="mt-12 p-6 bg-gray-50 dark:bg-gray-800 rounded-lg">
                     <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-4">
                         Author: {{ $post->author->name }}
@@ -65,41 +53,145 @@
                                 doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore
                                 veritatis.
                             </p>
-                            <div class="flex space-x-3">
-                                <a href="#" class="text-gray-400 hover:text-gray-600">
-                                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                                        <path
-                                            d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z" />
-                                    </svg>
-                                </a>
-                                <a href="#" class="text-gray-400 hover:text-gray-600">
-                                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                                        <path
-                                            d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
-                                    </svg>
-                                </a>
-                                <a href="#" class="text-gray-400 hover:text-gray-600">
-                                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                                        <path
-                                            d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 5.079 3.158 9.417 7.618 11.174-.105-.949-.199-2.403.041-3.439.219-.937 1.406-5.957 1.406-5.957s-.359-.72-.359-1.781c0-1.663.967-2.911 2.168-2.911 1.024 0 1.518.769 1.518 1.688 0 1.029-.653 2.567-.992 3.992-.285 1.193.6 2.165 1.775 2.165 2.128 0 3.768-2.245 3.768-5.487 0-2.861-2.063-4.869-5.008-4.869-3.41 0-5.409 2.562-5.409 5.199 0 1.033.394 2.143.889 2.741.099.12.112.224.085.345-.09.375-.293 1.199-.334 1.363-.053.225-.172.271-.402.165-1.495-.69-2.433-2.878-2.433-4.646 0-3.776 2.748-7.252 7.92-7.252 4.158 0 7.392 2.967 7.392 6.923 0 4.135-2.607 7.462-6.233 7.462-1.214 0-2.357-.629-2.751-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24.009 12.017 24.009c6.624 0 11.99-5.367 11.99-11.988C24.007 5.367 18.641.001 12.017.001z" />
-                                    </svg>
-                                </a>
-                            </div>
                         </div>
                     </div>
                 </div>
+
+                <div id="comments-section" class="mt-12"
+                    x-data='commentsComponent({{ $post->id }}, @json($comments->items()))'>
+                    <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">
+                        Komentar (<span x-text="comments.length"></span>)
+                    </h2>
+
+                    <div class="bg-gray-50 dark:bg-gray-800 rounded-lg p-6 mb-8">
+                        @auth
+                            <form id="comment-form" x-ref="form" @submit.prevent="submit">
+                                @csrf
+                                <input type="hidden" name="parent_id" x-model="newComment.parent_id">
+                                <div class="mb-4">
+                                    <textarea name="content" x-model="newComment.content" id="comment-content"
+                                        class="w-full p-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition duration-150 ease-in-out"
+                                        rows="4" placeholder="Tulis komentar..."></textarea>
+                                </div>
+                                <button type="submit"
+                                    class="bg-blue-600 text-white font-medium py-2 px-4 rounded-lg hover:bg-blue-700 transition duration-150 ease-in-out"
+                                    :disabled="sending">
+                                    Kirim Komentar
+                                </button>
+                            </form>
+                        @else
+                            <p class="text-gray-600 dark:text-gray-400">
+                                <a href="{{ route('login') }}" class="text-blue-600 hover:underline">Masuk</a> untuk
+                                meninggalkan komentar.
+                            </p>
+                        @endauth
+                    </div>
+
+                    <div id="comments-list" class="space-y-6">
+                        <template x-for="comment in comments" :key="comment.id">
+                            <div x-data="{ showReplyForm: false }" class="flex"
+                                :class="{ 'mt-6 pl-10 border-l border-gray-200': comment.parent_id }"
+                                :id="'comment-' + comment.id">
+                                <div class="flex-shrink-0 mr-3">
+                                    <img class="w-10 h-10 rounded-full"
+                                        :src="comment.user.avatar ? '/storage/' + comment.user.avatar :
+                                            '{{ asset('img/default-avatar.png') }}'"
+                                        :alt="comment.user.name">
+                                </div>
+                                <div class="flex-1">
+                                    <div class="bg-gray-50 dark:bg-gray-800 rounded-lg p-4">
+                                        <div class="flex items-center justify-between mb-2">
+                                            <span class="text-sm font-bold text-gray-900 dark:text-white"
+                                                x-text="comment.user.name"></span>
+                                            <span class="text-xs text-gray-500"
+                                                x-text="formatDate(comment.created_at)"></span>
+                                        </div>
+                                        <div class="prose prose-sm dark:prose-invert max-w-none"
+                                            x-html="comment.content_html"></div>
+                                    </div>
+
+                                    <div class="mt-2 flex items-center text-sm text-gray-500 space-x-4">
+                                        <button
+                                            class="flex items-center space-x-1 hover:text-blue-600 transition-colors duration-200"
+                                            @click="showReplyForm = !showReplyForm">
+                                            <span>Balas</span>
+                                        </button>
+                                    </div>
+
+                                    <div x-show="showReplyForm" x-collapse.duration.500ms
+                                        class="mt-4 pl-4 border-l border-gray-200">
+                                        @auth
+                                            <form @submit.prevent="submitReply($event, comment)">
+                                                @csrf
+                                                <div class="mb-2">
+                                                    <textarea name="content"
+                                                        class="w-full p-2 text-sm border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
+                                                        rows="3" placeholder="Balas komentar..."></textarea>
+                                                </div>
+                                                <button type="submit"
+                                                    class="bg-blue-600 text-white font-medium py-1 px-3 rounded-lg text-sm hover:bg-blue-700">
+                                                    Kirim Balasan
+                                                </button>
+                                            </form>
+                                        @else
+                                            <p class="text-gray-600 dark:text-gray-400">
+                                                <a href="{{ route('login') }}"
+                                                    class="text-blue-600 hover:underline">Masuk</a>
+                                                untuk membalas.
+                                            </p>
+                                        @endauth
+                                    </div>
+
+                                    <template x-if="comment.replies && comment.replies.length > 0">
+                                        <div class="mt-4 space-y-4">
+                                            <template x-for="reply in comment.replies" :key="reply.id">
+                                                <div class="pl-10 border-l border-gray-200">
+                                                    <div class="flex">
+                                                        <div class="flex-shrink-0 mr-3">
+                                                            <img class="w-8 h-8 rounded-full"
+                                                                :src="reply.user.avatar ? '/storage/' + reply.user.avatar :
+                                                                    '{{ asset('img/default-avatar.png') }}'"
+                                                                :alt="reply.user.name">
+                                                        </div>
+                                                        <div class="flex-1">
+                                                            <div class="bg-gray-50 dark:bg-gray-800 rounded-lg p-3">
+                                                                <div class="flex items-center justify-between mb-2">
+                                                                    <span
+                                                                        class="text-sm font-bold text-gray-900 dark:text-white"
+                                                                        x-text="reply.user.name"></span>
+                                                                    <span class="text-xs text-gray-500"
+                                                                        x-text="formatDate(reply.created_at)"></span>
+                                                                </div>
+                                                                <div class="prose prose-sm dark:prose-invert max-w-none"
+                                                                    x-html="reply.content_html"></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </template>
+                                        </div>
+                                    </template>
+                                </div>
+                            </div>
+                        </template>
+                    </div>
+
+                    <div x-show="loadingMore" class="text-center mt-4 text-gray-500">Memuat...</div>
+                    <button x-show="hasMore" @click="loadMore()"
+                        class="bg-blue-600 text-white font-medium py-2 px-4 rounded-lg hover:bg-blue-700 transition duration-150 ease-in-out mt-4 w-full">
+                        Muat Komentar Lebih Banyak
+                    </button>
+                </div>
             </div>
 
-            <!-- Sidebar -->
             <div class="lg:col-span-1">
-                <!-- Recent Posts -->
                 <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 mb-8">
                     <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-6">Recent Posts</h3>
                     <div class="space-y-4">
                         @forelse($recentPosts as $recentPost)
                             <div class="flex items-center space-x-3">
-                                <img src="{{ asset('storage/' . $recentPost->image) }}" alt="{{ $recentPost->title }}"
-                                    class="w-12 h-12 object-cover rounded">
+                                <img src="{{ asset('storage/' . $recentPost->image) }}"
+                                    alt="{{ $recentPost->title }}" class="w-12 h-12 object-cover rounded">
                                 <div class="flex-1">
                                     <h4 class="text-sm font-medium text-gray-900 dark:text-white hover:text-blue-600">
                                         <a href="{{ route('posts.show', $recentPost->slug) }}">
@@ -117,8 +209,6 @@
                         @endforelse
                     </div>
                 </div>
-
-                <!-- Explore Topics -->
                 <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 mb-8">
                     <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-6">Explore Topics</h3>
                     <div class="space-y-3">
@@ -133,7 +223,6 @@
                         @endforeach
                     </div>
                 </div>
-
             </div>
         </div>
         <div class="mt-5">
@@ -145,4 +234,169 @@
             </a>
         </div>
     </div>
+    @push('scripts')
+        <script>
+            function commentsComponent(postId, initialComments, hasMorePages) {
+                return {
+                    postId: postId,
+                    comments: initialComments || [],
+                    page: 1,
+                    hasMore: hasMorePages,
+                    loadingMore: false,
+                    sending: false,
+                    newComment: {
+                        content: '',
+                        parent_id: null
+                    },
+
+                    formatDate(date) {
+                        return new Date(date).toLocaleDateString('id-ID', {
+                            year: 'numeric',
+                            month: 'long',
+                            day: 'numeric',
+                            hour: '2-digit',
+                            minute: '2-digit'
+                        });
+                    },
+
+                    init() {
+                        if (typeof window.Echo === 'undefined') {
+                            console.warn('Echo is not initialized yet');
+                            return;
+                        }
+
+                        try {
+                            const channel = window.Echo.private(`posts.${this.postId}`);
+                            const boundListener = this.handleNewComment.bind(this);
+                            channel.listen('CommentCreated', boundListener);
+                            this.$cleanup = () => {
+                                try {
+                                    channel.stopListening('CommentCreated', boundListener);
+                                } catch (error) {
+                                    console.error('Error cleaning up Echo listener:', error);
+                                }
+                            };
+                        } catch (error) {
+                            console.error('Error initializing Echo channel:', error);
+                        }
+                    },
+
+                    handleNewComment(e) {
+                        if (!this.comments.find(c => c.id === e.comment.id)) {
+                            this.comments.unshift(e.comment);
+                        }
+                    },
+
+                    async submit() {
+                        if (!this.newComment.content.trim() || this.sending) return;
+
+                        this.sending = true;
+                        const commentData = {
+                            content: this.newComment.content,
+                            parent_id: this.newComment.parent_id
+                        };
+
+                        try {
+                            const response = await this.postComment(commentData);
+                            this.newComment.content = '';
+                            this.newComment.parent_id = null;
+
+                            if (!this.comments.find(c => c.id === response.comment.id)) {
+                                this.comments.unshift(response.comment);
+                            }
+                        } catch (error) {
+                            console.error('Error posting comment:', error);
+                            alert(error.message || 'Failed to post comment. Please try again.');
+                        } finally {
+                            this.sending = false;
+                        }
+                    },
+
+                    async submitReply(event, parentComment) {
+                        const form = event.target;
+                        const formData = new FormData(form);
+                        const content = formData.get('content');
+
+                        if (!content.trim()) return;
+
+                        this.errorMessage = null; // Reset pesan error
+
+                        const replyData = {
+                            content: content,
+                            parent_id: parentComment.id
+                        };
+
+                        try {
+                            const response = await this.postComment(replyData);
+
+                            if (!parentComment.replies) {
+                                parentComment.replies = [];
+                            }
+                            parentComment.replies.push(response.comment);
+
+                            form.reset();
+
+                        } catch (error) {
+                            this.errorMessage = error.message || 'Gagal mengirim balasan. Silakan coba lagi.';
+                            console.error('Error posting reply:', error);
+                        }
+                    },
+
+                    async postComment(data) {
+                        try {
+                            const tokenElement = document.querySelector('meta[name="csrf-token"]');
+                            if (!tokenElement) {
+                                throw new Error('CSRF token not found. Please refresh the page.');
+                            }
+
+                            const token = tokenElement.getAttribute('content');
+                            const response = await fetch(`/posts/${this.postId}/comments`, {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'X-CSRF-TOKEN': token,
+                                    'Accept': 'application/json'
+                                },
+                                body: JSON.stringify(data)
+                            });
+
+                            if (!response.ok) {
+                                throw new Error(`HTTP error! status: ${response.status}`);
+                            }
+
+                            return response.json();
+                        } catch (error) {
+                            console.error('Error in postComment:', error);
+                            throw new Error(error.message || 'Failed to post comment. Please try again.');
+                        }
+                    },
+
+                    async loadMore() {
+                        if (!this.hasMore || this.loadingMore) return;
+
+                        this.loadingMore = true;
+                        try {
+                            const response = await fetch(`/api/posts/${this.postId}/comments?page=${this.page + 1}`);
+                            const data = await response.json();
+
+                            if (!data.data || data.data.length === 0) {
+                                this.hasMore = false;
+                            } else {
+                                const newComments = data.data.filter(
+                                    newComment => !this.comments.find(c => c.id === newComment.id)
+                                );
+                                this.comments.push(...newComments);
+                                this.page++;
+                            }
+                        } catch (error) {
+                            console.error('Error loading more comments:', error);
+                            alert('Failed to load more comments.');
+                        } finally {
+                            this.loadingMore = false;
+                        }
+                    }
+                }
+            }
+        </script>
+    @endpush
 </x-layout>

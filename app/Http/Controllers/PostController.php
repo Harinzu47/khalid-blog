@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use App\Models\Comment;
 use App\Models\Category;
 use Illuminate\Http\Request;
 
@@ -48,11 +49,19 @@ class PostController extends Controller
             $query->where('status', 'approved');
         }])->get();
 
+        $comments = Comment::with('user', 'replies.user')
+            ->where('post_id', $post->id)
+            ->whereNull('parent_id')
+            ->where('status', 'published')
+            ->orderBy('created_at', 'desc')
+            ->paginate(20);
+
         return view('post', [
             'title' => $post->title,
             'post' => $post,
             'recentPosts' => $recentPosts,
             'categories' => $categories,
+            'comments' => $comments,
         ]);
     }
 }
