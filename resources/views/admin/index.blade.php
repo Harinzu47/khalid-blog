@@ -39,7 +39,7 @@
             </div>
             <div class="bg-gray-50 px-6 py-3">
                 <div class="text-sm">
-                    <a href="#" class="font-medium text-blue-600 hover:text-blue-500">
+                    <a href="{{ route('admin.users.index') }}" class="font-medium text-blue-600 hover:text-blue-500">
                         Kelola User
                     </a>
                 </div>
@@ -69,7 +69,7 @@
             </div>
             <div class="bg-gray-50 px-6 py-3">
                 <div class="text-sm">
-                    <a href="#" class="font-medium text-green-600 hover:text-green-500">
+                    <a href="{{ route('admin.posts.index') }}" class="font-medium text-green-600 hover:text-green-500">
                         Kelola Tulisan
                     </a>
                 </div>
@@ -91,7 +91,7 @@
                     <div class="ml-5 w-0 flex-1">
                         <dl>
                             <dt class="text-sm font-medium text-gray-500 truncate">Menunggu Approval</dt>
-                            <dd class="text-lg font-medium text-gray-900">{{ $pendingPosts ?? 0 }}</dd>
+                            <dd class="text-lg font-medium text-gray-900">{{ $pendingPostsCount ?? 0 }}</dd>
                         </dl>
                     </div>
                 </div>
@@ -99,7 +99,8 @@
             <div class="bg-gray-50 px-6 py-3">
                 <div class="text-sm">
                     {{-- <a href="{{ route('admin.posts.index', ['status' => 'pending']) }}" --}}
-                    <a href="#" class="font-medium text-orange-600 hover:text-orange-500">
+                    <a href="{{ route('admin.posts.index', ['status' => 'pending']) }}"
+                        class="font-medium text-orange-600 hover:text-orange-500">
                         Review Sekarang
                     </a>
                 </div>
@@ -130,7 +131,8 @@
             <div class="bg-gray-50 px-6 py-3">
                 <div class="text-sm">
                     {{-- <a href="{{ route('admin.comments.index') }}" --}}
-                    <a href="#" class="font-medium text-purple-600 hover:text-purple-500">
+                    <a href="{{ route('admin.comments.index') }}"
+                        class="font-medium text-purple-600 hover:text-purple-500">
                         Kelola Komentar
                     </a>
                 </div>
@@ -145,7 +147,8 @@
                 <div class="flex items-center justify-between">
                     <h3 class="text-lg font-medium text-gray-900">Tulisan Menunggu Approval</h3>
                     {{-- <a href="{{ route('admin.posts.index', ['status' => 'pending']) }}" --}}
-                    <a href="#" class="text-sm text-blue-600 hover:text-blue-800">Lihat Semua</a>
+                    <a href="{{ route('admin.posts.index', ['status' => 'pending']) }}"
+                        class="text-sm text-blue-600 hover:text-blue-800">Lihat Semua</a>
                 </div>
             </div>
             <div class="divide-y divide-gray-200">
@@ -202,8 +205,8 @@
             <div class="px-6 py-4 border-b border-gray-200">
                 <div class="flex items-center justify-between">
                     <h3 class="text-lg font-medium text-gray-900">User Terbaru</h3>
-                    {{-- <a href="{{ route('admin.users.index') }}" class="text-sm text-blue-600 hover:text-blue-800">Lihat --}}
-                    <a href="#" class="text-sm text-blue-600 hover:text-blue-800">Lihat Semua</a>
+                    <a href="{{ route('admin.users.index') }}"
+                        class="text-sm text-blue-600 hover:text-blue-800">Lihat Semua</a>
                 </div>
             </div>
             <div class="divide-y divide-gray-200">

@@ -22,7 +22,7 @@
                         <div>
                             @if (Auth::check())
                                 <button type="button" @click="isOpen = !isOpen"
-                                    class="relative flex max-w-xs items-center rounded-full bg-gray-800 text-sm focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 focus:outline-hidden cursor-pointer"
+                                    class="relative flex max-w-xs items-center rounded-full bg-red-700 text-sm focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 focus:outline-hidden cursor-pointer"
                                     id="user-menu-button" aria-expanded="false" aria-haspopup="true">
                                     <span class="absolute -inset-1.5"></span>
                                     <span class="sr-only">Open user menu</span>
@@ -69,7 +69,7 @@
             <div class="-mr-2 flex md:hidden">
                 <!-- Mobile menu button -->
                 <button type="button" @click="isOpen = !isOpen"
-                    class="relative inline-flex items-center justify-center rounded-md bg-gray-800 p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 focus:outline-hidden"
+                    class="relative inline-flex items-center justify-center rounded-md bg-red-700 p-2 text-white hover:bg-red-500"
                     aria-controls="mobile-menu" aria-expanded="false">
                     <span class="absolute -inset-0.5"></span>
                     <span class="sr-only">Open main menu</span>
@@ -114,14 +114,14 @@
                 </div>
                 <div class="mt-3 space-y-1 px-2">
                     <a href="/profile"
-                        class="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white">Your
+                        class="block rounded-md px-3 py-2 text-base font-medium text-dark hover:bg-red-400 hover:text-white">Your
                         Profile</a>
                     <a href="/dasboard"
-                        class="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white">Settings</a>
+                        class="block rounded-md px-3 py-2 text-base font-medium text-dark hover:bg-red-400 hover:text-white">Settings</a>
                     <form method="post" action="/logout">
                         @csrf
                         <button type="submit"
-                            class="block text-start rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white cursor-pointer"
+                            class="block text-start rounded-md px-3 py-2 text-base font-medium text-dark hover:bg-red-400 hover:text-white cursor-pointer"
                             role="menuitem" tabindex="-1" id="user-menu-item-2">Log out</button>
                     </form>
                 </div>

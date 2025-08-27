@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Post;
 use App\Models\User;
+use App\Models\Comment;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Post;
 
 class AdminController extends Controller
 {
@@ -26,13 +27,15 @@ class AdminController extends Controller
             ->get();
 
         $recentUsers = User::latest()->take(5)->get();
+        $totalComments = Comment::count();
 
         return view('admin.index', [
             'totalUsers' => $totalUsers,
             'totalPosts' => $totalPosts,
             'pendingPostsCount' => $pendingPostsCount,
             'recentPendingPosts' => $recentPendingPosts,
-            'recentUsers' => $recentUsers
+            'recentUsers' => $recentUsers,
+            'totalComments' => $totalComments
         ]);
     }
 }

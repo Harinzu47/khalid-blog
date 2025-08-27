@@ -9,6 +9,13 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Comment extends Model
 {
+
+    // Konstanta untuk status komentar, sesuai dengan enum di migrasi
+    public const STATUS_PUBLISHED = 'published';
+    public const STATUS_PENDING = 'pending';
+    public const STATUS_HIDDEN = 'hidden';
+    public const STATUS_DELETED = 'deleted';
+
     protected $fillable = [
         'post_id',
         'user_id',

@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\PostDashboardController;
 use App\Http\Controllers\Admin\AdminPostController;
 use App\Http\Controllers\Admin\AdminUserController;
+use App\Http\Controllers\Admin\AdminCommentController;
 use App\Http\Controllers\Admin\AdminCategoryController;
 
 Route::get('/', function () {
@@ -59,6 +60,11 @@ Route::middleware([AdminMiddleware::class])->prefix('admin')->name('admin.')->gr
     Route::resource('users', AdminUserController::class);
     Route::resource('posts', AdminPostController::class);
     Route::resource('categories', AdminCategoryController::class)->except('show');
+
+    Route::get('/comments', [AdminCommentController::class, 'index'])->name('comments.index');
+    Route::post('/comments/{comment}/publish', [AdminCommentController::class, 'publish'])->name('comments.publish');
+    Route::post('/comments/{comment}/hide', [AdminCommentController::class, 'hide'])->name('comments.hide');
+    Route::post('/comments/{comment}/delete', [AdminCommentController::class, 'delete'])->name('comments.delete');
 });
 
 Route::middleware('auth')->group(function () {
