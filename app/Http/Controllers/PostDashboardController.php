@@ -3,16 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use App\Models\Category;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\PostStoreRequest;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Requests\PostUpdateRequest;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class PostDashboardController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    use AuthorizesRequests;
+
     public function index()
     {
         $posts = Post::latest()->where('author_id', Auth::user()->id);
@@ -22,108 +26,66 @@ class PostDashboardController extends Controller
         return view('dashboard.index', ['posts' => $posts->paginate(7)->withQueryString()]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         return view('dashboard.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function store(PostStoreRequest $request)
     {
-        Validator::make(
-            $request->all(),
-            [
-                'title' => 'required|unique:posts|min:4|max:255',
-                'category_id' => 'required',
-                'body' => 'required|min:50',
-                'image' => 'image|file|max:2048',
-            ],
-            [
-                'title.required' => 'Field :attribute harus diisi!',
-                'category_id.required' => 'Pilih salah satu kategori!',
-                'body.min' => ':attribute minimal 50 karakter',
-                'image.image' => 'File harus berupa gambar',
+        $validatedData = $request->validated();
 
-            ],
-            [
-                'title' => 'Judul',
-                'category_id' => 'Kategori',
-                'body' => 'Isi Konten',
-                'image' => 'Gambar',
-            ]
-        )->validate();
+        if ($request->file('image')) {
+            $validatedData['image'] = $request->file('image')->store('img', 'public');
+        }
 
-        Post::create([
-            'title' => $request->title,
-            'slug' => str()->slug($request->title),
-            'body' => $request->body,
-            'image' => $request->file('image') ? $request->file('image')->store('img', 'public') : null,
-            'category_id' => $request->category_id,
-            'author_id' => Auth::user()->id,
-        ]);
+        $validatedData['slug'] = Str::slug($request->title);
+        $validatedData['author_id'] = Auth::user()->id;
 
-        return redirect('/dashboard')->with(['success' => 'Post created successfully!']);
+        Post::create($validatedData);
+
+        return redirect('/dashboard')->with('success', 'Postingan baru berhasil ditambahkan!');
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(Post $post)
     {
         return view('dashboard.show', ['post' => $post]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(Post $post)
     {
-        return view('dashboard.edit', ['post' => $post]);
+        $this->authorize('update', $post);
+
+        return view('dashboard.edit', [
+            'post' => $post,
+            'categories' => Category::all()
+        ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Post $post)
+    public function update(PostUpdateRequest $request, Post $post)
     {
-        //buat toast kalau gagal atau bukan user nya
+        $this->authorize('update', $post);
 
-        if ($post->author_id !== Auth::user()->id) {
-            return redirect('/dashboard')->with(['error' => 'You are not authorized to edit this post!']);
+        $validatedData = $request->validated();
+
+        if ($request->file('image')) {
+            if ($post->image) {
+                Storage::disk('public')->delete($post->image);
+            }
+            $validatedData['image'] = $request->file('image')->store('img', 'public');
         }
-        $request->validate([
-            'title' => 'required|min:4|max:255|unique:posts,title,' . $post->id,
-            'category_id' => 'required',
-            'body' => 'required',
-            'image' => 'image|file|max:2048',
-        ]);
 
-        $post->update([
-            'title' => $request->title,
-            'slug' => str()->slug($request->title),
-            'body' => $request->body,
-            'image' => $request->file('image') ? $request->file('image')->store('img', 'public') : $post->image,
-            'category_id' => $request->category_id,
-            'author_id' => Auth::user()->id,
-        ]);
+        $validatedData['slug'] = Str::slug($request->title);
+        $validatedData['author_id'] = Auth::user()->id;
 
-        return redirect('/dashboard')->with(['success' => 'Post updated successfully!']);
+        $post->update($validatedData);
+
+        return redirect('/dashboard')->with('success', 'Postingan berhasil diperbarui!');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Post $post)
     {
-        //buat toast dihalaman blade nya
-        if ($post->author_id !== Auth::user()->id) {
-            return redirect('/dashboard')->with(['error' => 'You are not authorized to delete this post!']);
-        }
+        $this->authorize('delete', $post);
 
         if ($post->image) {
             Storage::delete($post->image);

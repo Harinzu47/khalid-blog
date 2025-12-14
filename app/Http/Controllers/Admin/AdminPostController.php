@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Post;
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -13,23 +14,18 @@ class AdminPostController extends Controller
      */
     public function index(Request $request)
     {
-        // Mendapatkan status dari query string, default 'pending'
-        $status = $request->query('status', 'pending');
+        // Mengambil nilai 'status' dari URL. Jika tidak ada, gunakan default 'pending'.
+        // Ini menghilangkan hardcoding dan membuat endpoint lebih fleksibel.
+        $status = $request->query('status', Post::STATUS_PENDING);
 
-        $query = Post::with('author', 'category');
+        // Ambil postingan berdasarkan status yang diminta
+        $posts = Post::where('status', $status)->latest()->paginate(10);
 
-        if ($status !== 'all') {
-            // Tampilkan postingan yang belum memiliki status (null) atau status 'pending'
-            if ($status === 'pending') {
-                $query->where('status', 'pending')->orWhereNull('status');
-            } else {
-                $query->where('status', $status);
-            }
-        }
-
-        $posts = $query->latest('created_at')->paginate(10);
-
-        return view('admin.posts.index', compact('posts', 'status'));
+        // Mengembalikan tampilan dengan data postingan yang sudah difilter dan dipaginasi
+        return view('admin.posts.index', [
+            'posts' => $posts,
+            'users' => User::all(),
+        ]);
     }
 
     /**
@@ -38,6 +34,20 @@ class AdminPostController extends Controller
     public function show(Post $post)
     {
         return view('admin.posts.show', compact('post'));
+    }
+
+    public function approve(Post $post)
+    {
+        // Menggunakan konstanta untuk status yang disetujui.
+        $post->update(['status' => Post::STATUS_APPROVED]);
+        return back()->with('success', 'Postingan berhasil disetujui');
+    }
+
+    public function reject(Post $post)
+    {
+        // Menggunakan konstanta untuk status yang ditolak.
+        $post->update(['status' => Post::STATUS_REJECTED]);
+        return back()->with('success', 'Postingan berhasil ditolak');
     }
 
     /**

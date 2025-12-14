@@ -49,8 +49,23 @@
                                                 class="inline">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="text-red-600 hover:text-red-900"
-                                                    onclick="return confirm('Apakah Anda yakin ingin menghapus pengguna ini?')">Hapus</button>
+                                                <button type="button" class="text-red-600 hover:text-red-900"
+                                                    onclick="
+                                                        Swal.fire({
+                                                            title: 'Apakah Anda yakin?',
+                                                            text: 'Pengguna yang dihapus tidak dapat dikembalikan!',
+                                                            icon: 'warning',
+                                                            showCancelButton: true,
+                                                            confirmButtonColor: '#d33',
+                                                            cancelButtonColor: '#3085d6',
+                                                            confirmButtonText: 'Ya, Hapus!',
+                                                            cancelButtonText: 'Batal'
+                                                        }).then((result) => {
+                                                            if (result.isConfirmed) {
+                                                                this.closest('form').submit();
+                                                            }
+                                                        })
+                                                    ">Hapus</button>
                                             </form>
                                         </td>
                                     </tr>

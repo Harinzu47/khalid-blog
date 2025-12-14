@@ -16,12 +16,6 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     <style>
-        .bg-workspace {
-            background-image: url('{{ asset('img/background_login.png') }}');
-            background-size: cover;
-            background-position: center;
-        }
-
         .glass-effect {
             backdrop-filter: blur(20px);
             background: rgba(255, 255, 255, 0.95);
@@ -67,16 +61,17 @@
             border-color: rgba(128, 0, 32, 0.3);
         }
     </style>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
-<body class="font-sans antialiased bg-gray-100">
+<body class="font-sans antialiased bg-gradient-to-br from-indigo-50 via-white to-cyan-50">
     <div class="min-h-screen flex">
         <!-- Left Panel - Content -->
         <div class="flex-1 flex items-center justify-center p-6 lg:p-12">
             <div class="w-full max-w-md">
                 <!-- Logo Section -->
-                <div class="flex items-center justify-center mb-4">
-                    <x-application-logo></x-application-logo>
+                <div class="flex items-center justify-center mb-6">
+                    <img class="w-16 h-auto" src="{{ asset('img/logo-imm-ft-umj.png') }}" alt="Logo" aria-label="Logo">
                 </div>
 
                 <!-- Content Card -->
@@ -85,15 +80,6 @@
                 </div>
             </div>
         </div>
-
-        <!-- Right Panel - Background Image -->
-        <div class="hidden lg:flex flex-1 bg-workspace relative">
-            {{-- <div class="absolute inset-0 bg-gradient-to-l from-white/30 via-transparent to-white/60"></div>
-            <div class="absolute inset-0 bg-gradient-to-t from-white/20 via-transparent to-transparent"></div> --}}
-        </div>
-
-        <!-- Mobile Background Overlay -->
-        <div class="lg:hidden fixed inset-0 bg-workspace opacity-10 pointer-events-none"></div>
     </div>
 </body>
 

@@ -21,14 +21,12 @@ Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
 
 Route::get('/posts/{post:slug}', [PostController::class, 'show'])->name('posts.show');
 
-Route::post('/posts/{post}/comments', [CommentController::class, 'store'])->name('comments.store');
+Route::post('/posts/{post:id}/comments', [CommentController::class, 'store'])
+    ->middleware('throttle:6,1')
+    ->name('comments.store');
 
 Route::get('/about', function () {
     return view('about', ['title' => 'About Us']);
-});
-
-Route::get('/contact', function () {
-    return view('contact', ['title' => 'Contact Us']);
 });
 
 

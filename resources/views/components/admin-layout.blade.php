@@ -17,6 +17,9 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     @stack('styles')
+    
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body class="font-sans antialiased bg-gray-50">
@@ -103,82 +106,6 @@
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
-    <!-- JavaScript for Sidebar Management -->
-    <script>
-        // Global functions for sidebar management
-        function closeSidebar() {
-            const sidebar = document.getElementById('sidebar-container');
-            const overlay = document.getElementById('sidebar-overlay');
-
-            if (sidebar) {
-                sidebar.classList.add('-translate-x-full');
-            }
-            if (overlay) {
-                overlay.classList.add('hidden');
-            }
-        }
-
-        function toggleSidebar() {
-            const sidebar = document.getElementById('sidebar-container');
-            const overlay = document.getElementById('sidebar-overlay');
-
-            if (sidebar && overlay) {
-                const isHidden = sidebar.classList.contains('-translate-x-full');
-
-                if (isHidden) {
-                    // Show sidebar
-                    sidebar.classList.remove('-translate-x-full');
-                    overlay.classList.remove('hidden');
-                } else {
-                    // Hide sidebar
-                    sidebar.classList.add('-translate-x-full');
-                    overlay.classList.add('hidden');
-                }
-            }
-        }
-
-        // Handle window resize to manage sidebar visibility
-        function handleResize() {
-            const sidebar = document.getElementById('sidebar-container');
-            const overlay = document.getElementById('sidebar-overlay');
-
-            if (window.innerWidth >= 1024) {
-                // Desktop: ensure sidebar is visible and overlay is hidden
-                if (sidebar) sidebar.classList.remove('-translate-x-full');
-                if (overlay) overlay.classList.add('hidden');
-            } else {
-                // Mobile: ensure sidebar is hidden by default
-                if (sidebar) sidebar.classList.add('-translate-x-full');
-                if (overlay) overlay.classList.add('hidden');
-            }
-        }
-
-        // Initialize on page load
-        document.addEventListener('DOMContentLoaded', function() {
-            handleResize();
-
-            // Add event listeners
-            const overlay = document.getElementById('sidebar-overlay');
-            const toggleButton = document.getElementById('sidebar-toggle');
-
-            if (overlay) {
-                overlay.addEventListener('click', closeSidebar);
-            }
-
-            if (toggleButton) {
-                toggleButton.addEventListener('click', toggleSidebar);
-            }
-        });
-
-        // Handle window resize events
-        window.addEventListener('resize', handleResize);
-
-        // Handle orientation change on mobile devices
-        window.addEventListener('orientationchange', function() {
-            setTimeout(handleResize, 100);
-        });
-    </script>
-
     @stack('scripts')
 </body>
 

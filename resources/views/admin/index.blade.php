@@ -168,7 +168,8 @@
                                 <form action="#" method="POST" class="inline">
                                     @csrf
                                     @method('PATCH')
-                                    <button type="submit"
+                                    <button type="button"
+                                        onclick="Swal.fire({title: 'Setujui?', text: 'Publikasikan postingan ini?', icon: 'question', showCancelButton: true, confirmButtonText: 'Ya', cancelButtonText: 'Batal'}).then(r => { if(r.isConfirmed) this.closest('form').submit() })"
                                         class="text-green-600 hover:text-green-800 text-sm font-medium">
                                         Setujui
                                     </button>
@@ -177,7 +178,8 @@
                                 <form action="#" method="POST" class="inline">
                                     @csrf
                                     @method('PATCH')
-                                    <button type="submit"
+                                    <button type="button"
+                                        onclick="Swal.fire({title: 'Tolak?', text: 'Tolak postingan ini?', icon: 'warning', showCancelButton: true, confirmButtonText: 'Ya', cancelButtonText: 'Batal'}).then(r => { if(r.isConfirmed) this.closest('form').submit() })"
                                         class="text-red-600 hover:text-red-800 text-sm font-medium">
                                         Tolak
                                     </button>

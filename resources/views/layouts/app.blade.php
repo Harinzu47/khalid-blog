@@ -17,6 +17,8 @@
 
     <!-- css stack -->
     @stack('styles')
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body class="font-sans antialiased">
@@ -38,7 +40,6 @@
         </main>
     </div>
 
-    @include('layouts.footer')
     <!-- Scripts stack -->
     @stack('scripts')
 </body>

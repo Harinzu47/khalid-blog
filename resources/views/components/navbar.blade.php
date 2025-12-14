@@ -10,7 +10,6 @@
                         <x-my-nav-link href="/" :current="request()->is('/')">Home</x-my-nav-link>
                         <x-my-nav-link href="/posts" :current="request()->is('posts')">Blog</x-my-nav-link>
                         <x-my-nav-link href="/about" :current="request()->is('about')">About</x-my-nav-link>
-                        <x-my-nav-link href="/contact" :current="request()->is('contact')">Contact</x-my-nav-link>
                     </div>
                 </div>
             </div>
@@ -22,14 +21,14 @@
                         <div>
                             @if (Auth::check())
                                 <button type="button" @click="isOpen = !isOpen"
-                                    class="relative flex max-w-xs items-center rounded-full bg-red-700 text-sm focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 focus:outline-hidden cursor-pointer"
+                                    class="relative flex max-w-xs items-center rounded-full bg-white-700 text-sm focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 focus:outline-hidden cursor-pointer"
                                     id="user-menu-button" aria-expanded="false" aria-haspopup="true">
                                     <span class="absolute -inset-1.5"></span>
                                     <span class="sr-only">Open user menu</span>
                                     <img class="size-8 rounded-full"
                                         src="{{ Auth::user()->avatar ? asset('storage/' . Auth::user()->avatar) : asset('img/default-avatar.png') }}"
                                         alt="{{ Auth::user()->name }}">
-                                    <div class="text-gray-300 text-sm font-medium ml-3">{{ Auth::user()->name }}</div>
+                                    <div class="text-red-700 text-sm font-medium ml-3">{{ Auth::user()->name }}</div>
                                     <div class="ms-1 text-gray-300">
                                         <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg"
                                             viewBox="0 0 20 20">

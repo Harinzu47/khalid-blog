@@ -1,8 +1,9 @@
 <x-guest-layout>
     <!-- Header -->
-    <div class="text-center mb-8">
-        <h2 class="text-gray-900 text-3xl font-bold mb-3">Create your account</h2>
-        <p class="text-gray-600">
+    <!-- Header -->
+    <div class="text-center mb-10">
+        <h2 class="text-gray-900 text-3xl font-bold mb-2">Create your account</h2>
+        <p class="text-gray-500 text-sm">
             Join us today and start your journey with our platform.
         </p>
     </div>

@@ -17,7 +17,11 @@
 
     <!-- CSS Stack -->
     @stack('styles')
+    
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
+
 
 <body class="font-sans antialiased bg-gray-50">
     <div class="min-h-screen">
@@ -27,7 +31,7 @@
         <!-- Main Content -->
         <div class="lg:ml-64">
             <!-- Top Navigation -->
-            @include('admin.components.topbar')
+            @include('components.admin.topbar')
 
             <!-- Page Header -->
             @isset($header)

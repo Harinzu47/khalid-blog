@@ -69,7 +69,6 @@
                 animation: pulse-slow 4s ease-in-out infinite;
             }
 
-            /* Scroll animation styles */
             .scroll-animate {
                 opacity: 0;
                 transition: opacity 0.8s ease-out, transform 0.8s ease-out;
@@ -115,7 +114,6 @@
                 border: 1px solid rgba(255, 255, 255, 0.1);
             }
 
-            /* Gradient text */
             .gradient-text {
                 background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
                 -webkit-background-clip: text;
@@ -123,7 +121,6 @@
                 background-clip: text;
             }
 
-            /* Custom scrollbar */
             ::-webkit-scrollbar {
                 width: 8px;
             }
@@ -369,27 +366,18 @@
                 <div id="gallery-carousel" class="relative w-full shadow-2xl rounded-3xl overflow-hidden"
                     data-carousel="slide">
                     <div class="relative h-80 md:h-[32rem]">
-                        <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                            <img src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-1.jpg"
-                                class="absolute block w-full h-full object-cover" alt="Foto kegiatan 1">
+                        <div class="hidden duration-700 ease-in-out" data-carousel-item="active">
+                            <img src="{{ asset('img/about_images/kegiatan_diskusi.png') }}"
+                                class="absolute block w-full h-full object-cover" alt="Kegiatan Diskusi">
                             <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
                             <div class="absolute bottom-8 left-8 text-white">
                                 <h3 class="text-2xl font-bold mb-2">Kegiatan Diskusi</h3>
                                 <p class="text-gray-200">Membahas isu-isu terkini dengan perspektif Islam</p>
                             </div>
                         </div>
-                        <div class="hidden duration-700 ease-in-out" data-carousel-item="active">
-                            <img src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-2.jpg"
-                                class="absolute block w-full h-full object-cover" alt="Foto kegiatan 2">
-                            <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
-                            <div class="absolute bottom-8 left-8 text-white">
-                                <h3 class="text-2xl font-bold mb-2">Kegiatan Sosial</h3>
-                                <p class="text-gray-200">Berbagi kasih dengan masyarakat sekitar</p>
-                            </div>
-                        </div>
                         <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                            <img src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-3.jpg"
-                                class="absolute block w-full h-full object-cover" alt="Foto kegiatan 3">
+                            <img src="{{ asset('img/about_images/workshop_teknologi.png') }}"
+                                class="absolute block w-full h-full object-cover" alt="Workshop Teknologi">
                             <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
                             <div class="absolute bottom-8 left-8 text-white">
                                 <h3 class="text-2xl font-bold mb-2">Workshop Teknologi</h3>
@@ -397,8 +385,8 @@
                             </div>
                         </div>
                         <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                            <img src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-4.jpg"
-                                class="absolute block w-full h-full object-cover" alt="Foto kegiatan 4">
+                            <img src="{{ asset('img/about_images/seminar_nasional.png') }}"
+                                class="absolute block w-full h-full object-cover" alt="Seminar Nasional">
                             <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
                             <div class="absolute bottom-8 left-8 text-white">
                                 <h3 class="text-2xl font-bold mb-2">Seminar Nasional</h3>
@@ -455,7 +443,7 @@
             </p>
             <div
                 class="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-4 scroll-animate animate-fadeInUp">
-                <a href="#"
+                <a href="{{ auth()->check() ? route('dashboard.post.create') : route('login') }}"
                     class="inline-flex justify-center items-center py-3 px-8 text-base font-medium text-white rounded-lg bg-red-700 transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 hover:bg-red-400">
                     Kirim Tulisan
                     <svg class="ml-2 w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
@@ -464,7 +452,7 @@
                         </path>
                     </svg>
                 </a>
-                <a href="/hubungi-kami"
+                <a href="https://linktr.ee/Immftumj"
                     class="inline-flex justify-center items-center py-3 px-8 text-base font-medium text-gray-900 rounded-lg border border-gray-300 hover:bg-gray-100 transition-colors duration-300 focus:ring-4 focus:ring-gray-100 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700">
                     Hubungi Kami
                 </a>
@@ -477,7 +465,7 @@
             const observerOptions = {
                 root: null,
                 rootMargin: "0px",
-                threshold: 0.1 // Triggers when 10% of the element is visible
+                threshold: 0.1
             };
 
             const scrollObserver = new IntersectionObserver((entries, observer) => {

@@ -2,52 +2,75 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Attributes\Scope;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Testing\Fluent\Concerns\Has;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Support\Arr;
 
 class Post extends Model
 {
     use HasFactory;
+
+    // Jika suatu saat Anda ingin mengubah nama status, Anda hanya perlu mengubahnya di sini.
+    public const STATUS_PENDING = 'pending';
+    public const STATUS_APPROVED = 'approved';
+    public const STATUS_REJECTED = 'rejected';
+
     protected $guarded = ['id'];
+    protected $with = ['category', 'author', 'comments'];
 
-    protected $with = ['author', 'category'];
-
-    public function author(): BelongsTo
+    /**
+     * Get the route key for the model.
+     */
+    public function getRouteKeyName(): string
     {
-        return $this->belongsTo(User::class);
+        return 'slug';
     }
 
+    /**
+     * Get the category that owns the Post.
+     */
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);
     }
 
-    #[Scope]
-    public function filter(Builder $query, array $filters): void
+    /**
+     * Get the author that owns the Post.
+     */
+    public function author(): BelongsTo
     {
-        $query->when($filters['search'] ?? false, function ($query, $search) {
-            $query->where('title', 'like', '%' . $search . '%');
+        return $this->belongsTo(User::class, 'author_id');
+    }
+
+    /**
+     * Get the comments for the blog post.
+     */
+    public function comments()
+    {
+        return $this->hasMany(Comment::class)->where('status', self::STATUS_APPROVED);
+    }
+
+    public function scopeApproved($query)
+    {
+        return $query->where('status', self::STATUS_APPROVED);
+    }
+
+    /**
+     * Filter posts based on given criteria.
+     */
+    public function scopeFilter(Builder $query, array $filters): void
+    {
+        $query->when(isset($filters['search']), function ($query) use ($filters) {
+            $query->where('title', 'like', '%' . $filters['search'] . '%');
         });
 
-        $query->when($filters['category'] ?? false, function ($query, $category) {
-            $query->whereHas(
-                'category',
-                fn(Builder $query) =>
-                $query->where('slug', $category)
-            );
+        $query->when(isset($filters['category']), function ($query) use ($filters) {
+            $query->whereHas('category', fn($query) => $query->where('slug', $filters['category']));
         });
 
-        $query->when($filters['author'] ?? false, function ($query, $author) {
-            $query->whereHas(
-                'author',
-                fn(Builder $query) =>
-                $query->where('username', $author)
-            );
+        $query->when(isset($filters['author']), function ($query) use ($filters) {
+            $query->whereHas('author', fn($query) => $query->where('username', $filters['author']));
         });
     }
 }

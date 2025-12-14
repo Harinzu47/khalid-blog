@@ -52,11 +52,16 @@ class Comment extends Model
         return $this->hasMany(Comment::class, 'parent_id')->where('status', 'published')->orderBy('created_at', 'asc');
     }
 
+    public function scopePublished($query)
+    {
+        return $query->where('status', self::STATUS_PUBLISHED);
+    }
+
     // Mutator untuk otomatis mengisi content_html saat content diatur
     public function setContentAttribute(string $value): void
     {
         $this->attributes['content'] = $value;
-        // Konversi markdown ke HTML, atau gunakan library markdown parser
-        $this->attributes['content_html'] = Str::markdown($value);
+        // Strip tags first to remove any HTML, then convert Markdown
+        $this->attributes['content_html'] = Str::markdown(strip_tags($value));
     }
 }
